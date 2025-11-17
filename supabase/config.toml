@@ -1,0 +1,10 @@
+project_id = "huhpiqwkogzjxxegityy"
+
+[functions.process-mining-data]
+verify_jwt = false
+
+[functions.generate-report]
+verify_jwt = false
+
+[functions.get-sample-data]
+verify_jwt = false
