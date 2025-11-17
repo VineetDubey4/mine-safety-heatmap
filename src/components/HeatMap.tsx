@@ -17,9 +17,9 @@ const HeatMap = ({ data, type }: HeatMapProps) => {
   useEffect(() => {
     if (!mapContainer.current || mapInstance.current) return;
 
-    // Initialize map
+    // Initialize map - centered on Indian mining region (Jharkhand)
     const map = L.map(mapContainer.current, {
-      center: [40.7128, -74.0060],
+      center: [23.3441, 85.3096],
       zoom: 11,
       zoomControl: true,
     });
