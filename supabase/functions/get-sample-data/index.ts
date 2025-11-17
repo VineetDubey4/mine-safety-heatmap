@@ -14,9 +14,9 @@ Deno.serve(async (req) => {
     // Generate sample data points for demonstration
     const sampleData = [];
     
-    // Center coordinates (simulating a mining region)
-    const centerLat = 40.7128;
-    const centerLng = -74.0060;
+    // Center coordinates (simulating Indian mining region - Jharkhand)
+    const centerLat = 23.3441;
+    const centerLng = 85.3096;
     
     // Generate 50 random points around the center
     for (let i = 0; i < 50; i++) {
