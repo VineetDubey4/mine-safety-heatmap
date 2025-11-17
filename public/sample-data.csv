@@ -1,51 +1,46 @@
-latitude,longitude,value,type
-23.3441,85.3096,85.5,gas
-23.3451,85.3106,92.3,gas
-23.3461,85.3086,45.7,gas
-23.3431,85.3076,78.9,gas
-23.3446,85.3101,95.2,gas
-23.3456,85.3091,38.4,gas
-23.3421,85.3111,67.8,gas
-23.3466,85.3081,88.1,gas
-23.3436,85.3116,72.5,gas
-23.3449,85.3094,91.3,gas
-23.3453,85.3084,55.6,gas
-23.3429,85.3104,82.4,gas
-23.3443,85.3088,46.9,gas
-23.3459,85.3098,94.7,gas
-23.3433,85.3078,39.2,gas
-23.3447,85.3108,76.8,gas
-23.3463,85.3074,87.5,gas
-23.3426,85.3114,63.1,gas
-23.3440,85.3092,98.3,gas
-23.3455,85.3100,52.7,gas
-23.3441,85.3096,73.2,radiation
-23.3451,85.3106,88.6,radiation
-23.3461,85.3086,42.3,radiation
-23.3431,85.3076,95.1,radiation
-23.3446,85.3101,68.9,radiation
-23.3456,85.3091,35.7,radiation
-23.3421,85.3111,81.4,radiation
-23.3466,85.3081,77.8,radiation
-23.3436,85.3116,59.6,radiation
-23.3449,85.3094,92.5,radiation
-23.3453,85.3084,48.3,radiation
-23.3429,85.3104,86.7,radiation
-23.3443,85.3088,44.1,radiation
-23.3459,85.3098,91.2,radiation
-23.3433,85.3078,37.9,radiation
-23.3447,85.3108,79.5,radiation
-23.3463,85.3074,84.3,radiation
-23.3426,85.3114,61.8,radiation
-23.3440,85.3092,96.4,radiation
-23.3455,85.3100,54.6,radiation
-23.3441,85.3096,69.7,vibration
-23.3451,85.3106,85.2,vibration
-23.3461,85.3086,41.8,vibration
-23.3431,85.3076,93.6,vibration
-23.3446,85.3101,72.4,vibration
-23.3456,85.3091,38.1,vibration
-23.3421,85.3111,80.9,vibration
-23.3466,85.3081,75.3,vibration
-23.3436,85.3116,57.2,vibration
-23.3449,85.3094,89.8,vibration
+latitude,longitude,value,type,mine_name
+22.65,86.35,85.5,radiation,Jadugora Uranium Mines
+22.655,86.355,92.3,radiation,Jadugora Uranium Mines
+22.645,86.345,78.9,gas,Jadugora Uranium Mines
+22.66,86.36,95.2,radiation,Jadugora Uranium Mines
+22.64,86.34,88.1,radiation,Jadugora Uranium Mines
+22.652,86.358,91.3,gas,Jadugora Uranium Mines
+22.648,86.342,82.4,radiation,Jadugora Uranium Mines
+22.658,86.362,94.7,radiation,Jadugora Uranium Mines
+22.642,86.338,87.5,gas,Jadugora Uranium Mines
+22.654,86.354,76.8,radiation,Jadugora Uranium Mines
+22.646,86.346,89.2,radiation,Jadugora Uranium Mines
+22.656,86.356,93.4,gas,Jadugora Uranium Mines
+22.644,86.344,81.7,radiation,Jadugora Uranium Mines
+22.662,86.364,90.5,radiation,Jadugora Uranium Mines
+22.638,86.336,84.3,gas,Jadugora Uranium Mines
+23.80,86.43,67.8,gas,Dhanbad Coal Mines
+23.805,86.435,72.5,vibration,Dhanbad Coal Mines
+23.795,86.425,55.6,gas,Dhanbad Coal Mines
+23.81,86.44,82.4,gas,Dhanbad Coal Mines
+23.79,86.42,63.1,vibration,Dhanbad Coal Mines
+23.802,86.438,88.3,gas,Dhanbad Coal Mines
+23.798,86.422,52.7,vibration,Dhanbad Coal Mines
+23.808,86.442,73.2,gas,Dhanbad Coal Mines
+23.792,86.418,68.6,vibration,Dhanbad Coal Mines
+23.804,86.434,81.4,gas,Dhanbad Coal Mines
+23.796,86.426,59.6,vibration,Dhanbad Coal Mines
+23.806,86.436,77.8,gas,Dhanbad Coal Mines
+23.794,86.424,61.8,vibration,Dhanbad Coal Mines
+23.812,86.444,85.2,gas,Dhanbad Coal Mines
+23.788,86.416,54.6,vibration,Dhanbad Coal Mines
+22.56,86.18,69.7,vibration,HCL Mines East Singhbhum
+22.565,86.185,75.3,radiation,HCL Mines East Singhbhum
+22.555,86.175,57.2,vibration,HCL Mines East Singhbhum
+22.57,86.19,89.8,vibration,HCL Mines East Singhbhum
+22.55,86.17,62.4,radiation,HCL Mines East Singhbhum
+22.562,86.188,78.5,vibration,HCL Mines East Singhbhum
+22.558,86.172,65.9,radiation,HCL Mines East Singhbhum
+22.568,86.192,83.7,vibration,HCL Mines East Singhbhum
+22.552,86.168,71.2,vibration,HCL Mines East Singhbhum
+22.564,86.184,80.6,radiation,HCL Mines East Singhbhum
+22.556,86.176,68.3,vibration,HCL Mines East Singhbhum
+22.566,86.186,86.1,vibration,HCL Mines East Singhbhum
+22.554,86.174,73.8,radiation,HCL Mines East Singhbhum
+22.572,86.194,79.4,vibration,HCL Mines East Singhbhum
+22.548,86.166,66.7,radiation,HCL Mines East Singhbhum

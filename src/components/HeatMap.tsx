@@ -17,10 +17,10 @@ const HeatMap = ({ data, type }: HeatMapProps) => {
   useEffect(() => {
     if (!mapContainer.current || mapInstance.current) return;
 
-    // Initialize map - centered on Indian mining region (Jharkhand)
+    // Initialize map - centered on Jharkhand mining region to show all three mines
     const map = L.map(mapContainer.current, {
-      center: [23.3441, 85.3096],
-      zoom: 11,
+      center: [23.00, 86.30], // Central point between all three mines
+      zoom: 9,
       zoomControl: true,
     });
 
@@ -49,6 +49,19 @@ const HeatMap = ({ data, type }: HeatMapProps) => {
       mapInstance.current.removeLayer(heatLayerRef.current);
     }
 
+    // Add mine location markers
+    const miningLocations = [
+      { name: 'Jadugora Uranium Mines', lat: 22.65, lng: 86.35 },
+      { name: 'Dhanbad Coal Mines', lat: 23.80, lng: 86.43 },
+      { name: 'HCL Mines East Singhbhum', lat: 22.56, lng: 86.18 }
+    ];
+
+    miningLocations.forEach(mine => {
+      L.marker([mine.lat, mine.lng])
+        .addTo(mapInstance.current!)
+        .bindPopup(`<strong>${mine.name}</strong>`);
+    });
+
     // Prepare heat data with intensity
     const heatData = data.map(point => [
       point.latitude,
@@ -73,7 +86,7 @@ const HeatMap = ({ data, type }: HeatMapProps) => {
 
     heatLayerRef.current = heatLayer;
 
-    // Fit bounds to data
+    // Fit bounds to show all three mines
     if (data.length > 0) {
       const bounds = L.latLngBounds(data.map(d => [d.latitude, d.longitude]));
       mapInstance.current.fitBounds(bounds, { padding: [50, 50] });

@@ -187,7 +187,7 @@ const Index = () => {
             Mine Safety HeatMap Analyzer
           </h1>
           <p className="text-muted-foreground text-lg">
-            Visualize dangerous mining zones using real-time heatmaps
+            Monitoring Jadugora Uranium, Dhanbad Coal & HCL East Singhbhum Mines
           </p>
         </div>
 
