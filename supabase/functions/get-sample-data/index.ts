@@ -11,25 +11,42 @@ Deno.serve(async (req) => {
   try {
     console.log('Generating sample mining safety data');
 
-    // Generate sample data points for demonstration
-    const sampleData = [];
+    // Generate sample data points for specific Indian mines
+    const sampleData: Array<{
+      latitude: number;
+      longitude: number;
+      value: number;
+      type: string;
+      mine_name: string;
+    }> = [];
     
-    // Center coordinates (simulating Indian mining region - Jharkhand)
-    const centerLat = 23.3441;
-    const centerLng = 85.3096;
+    // Define actual mining locations in Jharkhand, India
+    const miningLocations = [
+      { name: 'Jadugora Uranium Mines', lat: 22.65, lng: 86.35, types: ['radiation', 'gas'] },
+      { name: 'Dhanbad Coal Mines', lat: 23.80, lng: 86.43, types: ['gas', 'vibration'] },
+      { name: 'HCL Mines East Singhbhum', lat: 22.56, lng: 86.18, types: ['vibration', 'radiation'] }
+    ];
     
-    // Generate 50 random points around the center
-    for (let i = 0; i < 50; i++) {
-      const latOffset = (Math.random() - 0.5) * 0.1;
-      const lngOffset = (Math.random() - 0.5) * 0.1;
+    // Generate data points for each mine (15-20 points per mine)
+    miningLocations.forEach(mine => {
+      const pointsPerMine = 15 + Math.floor(Math.random() * 6); // 15-20 points
       
-      sampleData.push({
-        latitude: centerLat + latOffset,
-        longitude: centerLng + lngOffset,
-        value: Math.random() * 100,
-        type: ['gas', 'radiation', 'vibration'][i % 3],
-      });
-    }
+      for (let i = 0; i < pointsPerMine; i++) {
+        const latOffset = (Math.random() - 0.5) * 0.05; // Smaller radius for specific mines
+        const lngOffset = (Math.random() - 0.5) * 0.05;
+        
+        // Select type based on mine's primary hazards
+        const type = mine.types[Math.floor(Math.random() * mine.types.length)];
+        
+        sampleData.push({
+          latitude: mine.lat + latOffset,
+          longitude: mine.lng + lngOffset,
+          value: Math.random() * 100,
+          type: type,
+          mine_name: mine.name,
+        });
+      }
+    });
 
     console.log('Sample data generated:', sampleData.length, 'points');
 
