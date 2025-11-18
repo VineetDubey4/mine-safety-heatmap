@@ -50,7 +50,10 @@ const Index = () => {
   const [mineStats, setMineStats] = useState<MineStats[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchData = async (type: string) => {
+  const format = (n: number | null | undefined) =>
+    typeof n === 'number' && isFinite(n) ? n.toFixed(2) : '0.00';
+ 
+   const fetchData = async (type: string) => {
     setIsLoading(true);
     try {
       const { data: miningData, error } = await supabase
@@ -66,7 +69,7 @@ const Index = () => {
           longitude: typeof d.longitude === 'string' ? parseFloat(d.longitude) : d.longitude,
           value: typeof d.value === 'string' ? parseFloat(d.value) : d.value,
           type: d.type,
-          mine_name: d.mine_name,
+          mine_name: (d as any)?.mine_name,
         }));
         
         setData(typedData);
@@ -291,13 +294,13 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <StatCard
               title="Maximum Value"
-              value={stats.max.toFixed(2)}
+              value={format(stats.max)}
               icon={TrendingUp}
               variant="danger"
             />
             <StatCard
               title="Average Value"
-              value={stats.average.toFixed(2)}
+              value={format(stats.average)}
               icon={TypeIcon}
               variant="warning"
             />
@@ -309,7 +312,7 @@ const Index = () => {
             />
             <StatCard
               title="Safe Distance (km)"
-              value={stats.habitationDistance.toFixed(2)}
+              value={format(stats.habitationDistance)}
               icon={Home}
               variant="safe"
             />
@@ -334,11 +337,11 @@ const Index = () => {
                     </div>
                     <div className="flex justify-between items-center border-b border-border pb-2">
                       <span className="text-sm text-muted-foreground">Max Value</span>
-                      <span className="font-semibold text-foreground">{mineStat.max.toFixed(2)}</span>
+                      <span className="font-semibold text-foreground">{format(mineStat.max)}</span>
                     </div>
                     <div className="flex justify-between items-center border-b border-border pb-2">
                       <span className="text-sm text-muted-foreground">Average</span>
-                      <span className="font-semibold text-foreground">{mineStat.average.toFixed(2)}</span>
+                      <span className="font-semibold text-foreground">{format(mineStat.average)}</span>
                     </div>
                     <div className="flex justify-between items-center border-b border-border pb-2">
                       <span className="text-sm text-muted-foreground">Danger Zones</span>
