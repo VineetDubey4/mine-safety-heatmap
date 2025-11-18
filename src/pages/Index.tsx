@@ -66,6 +66,7 @@ const Index = () => {
           longitude: typeof d.longitude === 'string' ? parseFloat(d.longitude) : d.longitude,
           value: typeof d.value === 'string' ? parseFloat(d.value) : d.value,
           type: d.type,
+          mine_name: d.mine_name,
         }));
         
         setData(typedData);
