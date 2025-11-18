@@ -23,6 +23,7 @@ interface MiningData {
   longitude: number;
   value: number;
   type: string;
+  mine_name?: string;
 }
 
 interface Stats {
@@ -30,6 +31,11 @@ interface Stats {
   average: number;
   dangerZoneCount: number;
   habitationDistance: number;
+}
+
+interface MineStats extends Stats {
+  mineName: string;
+  dataPoints: number;
 }
 
 const Index = () => {
@@ -41,6 +47,7 @@ const Index = () => {
     dangerZoneCount: 0,
     habitationDistance: 0,
   });
+  const [mineStats, setMineStats] = useState<MineStats[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (type: string) => {
@@ -77,9 +84,11 @@ const Index = () => {
   const calculateStats = (data: MiningData[]) => {
     if (data.length === 0) {
       setStats({ max: 0, average: 0, dangerZoneCount: 0, habitationDistance: 0 });
+      setMineStats([]);
       return;
     }
 
+    // Overall stats
     const values = data.map(d => d.value);
     const max = Math.max(...values);
     const average = values.reduce((a, b) => a + b, 0) / values.length;
@@ -87,6 +96,40 @@ const Index = () => {
     const habitationDistance = Math.round((max / 10) * 100) / 100;
 
     setStats({ max, average, dangerZoneCount, habitationDistance });
+
+    // Per-mine stats
+    const mineNames = ['Jadugora Uranium Mines', 'Dhanbad Coal Mines', 'HCL Mines East Singhbhum'];
+    const statsPerMine: MineStats[] = mineNames.map(mineName => {
+      const mineData = data.filter(d => d.mine_name === mineName);
+      
+      if (mineData.length === 0) {
+        return {
+          mineName,
+          dataPoints: 0,
+          max: 0,
+          average: 0,
+          dangerZoneCount: 0,
+          habitationDistance: 0
+        };
+      }
+
+      const mineValues = mineData.map(d => d.value);
+      const mineMax = Math.max(...mineValues);
+      const mineAvg = mineValues.reduce((a, b) => a + b, 0) / mineValues.length;
+      const mineDanger = mineValues.filter(v => v > 40).length;
+      const mineDistance = Math.round((mineMax / 10) * 100) / 100;
+
+      return {
+        mineName,
+        dataPoints: mineData.length,
+        max: mineMax,
+        average: Math.round(mineAvg * 100) / 100,
+        dangerZoneCount: mineDanger,
+        habitationDistance: mineDistance
+      };
+    });
+
+    setMineStats(statsPerMine);
   };
 
   const loadSampleData = async () => {
@@ -154,6 +197,7 @@ const Index = () => {
       toast.success('Data cleared successfully!');
       setData([]);
       setStats({ max: 0, average: 0, dangerZoneCount: 0, habitationDistance: 0 });
+      setMineStats([]);
     } catch (error: any) {
       toast.error('Failed to clear data: ' + error.message);
     }
@@ -240,33 +284,77 @@ const Index = () => {
           </div>
         </Card>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard
-            title="Maximum Value"
-            value={stats.max.toFixed(2)}
-            icon={TrendingUp}
-            variant="danger"
-          />
-          <StatCard
-            title="Average Value"
-            value={stats.average.toFixed(2)}
-            icon={TypeIcon}
-            variant="warning"
-          />
-          <StatCard
-            title="Danger Zone Count"
-            value={stats.dangerZoneCount}
-            icon={AlertTriangle}
-            variant="danger"
-          />
-          <StatCard
-            title="Safe Distance (km)"
-            value={stats.habitationDistance.toFixed(2)}
-            icon={Home}
-            variant="safe"
-          />
+        {/* Overall Statistics */}
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-foreground mb-4">Overall Statistics - {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <StatCard
+              title="Maximum Value"
+              value={stats.max.toFixed(2)}
+              icon={TrendingUp}
+              variant="danger"
+            />
+            <StatCard
+              title="Average Value"
+              value={stats.average.toFixed(2)}
+              icon={TypeIcon}
+              variant="warning"
+            />
+            <StatCard
+              title="Danger Zone Count"
+              value={stats.dangerZoneCount}
+              icon={AlertTriangle}
+              variant="danger"
+            />
+            <StatCard
+              title="Safe Distance (km)"
+              value={stats.habitationDistance.toFixed(2)}
+              icon={Home}
+              variant="safe"
+            />
+          </div>
         </div>
+
+        {/* Mine-Specific Statistics */}
+        {mineStats.length > 0 && (
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-foreground mb-4">Mine-Specific Results</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {mineStats.map((mineStat) => (
+                <Card key={mineStat.mineName} className="p-6 bg-card border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-primary" />
+                    {mineStat.mineName}
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center border-b border-border pb-2">
+                      <span className="text-sm text-muted-foreground">Data Points</span>
+                      <span className="font-semibold text-foreground">{mineStat.dataPoints}</span>
+                    </div>
+                    <div className="flex justify-between items-center border-b border-border pb-2">
+                      <span className="text-sm text-muted-foreground">Max Value</span>
+                      <span className="font-semibold text-foreground">{mineStat.max.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between items-center border-b border-border pb-2">
+                      <span className="text-sm text-muted-foreground">Average</span>
+                      <span className="font-semibold text-foreground">{mineStat.average.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between items-center border-b border-border pb-2">
+                      <span className="text-sm text-muted-foreground">Danger Zones</span>
+                      <span className={`font-semibold ${mineStat.dangerZoneCount > 0 ? 'text-destructive' : 'text-green-600'}`}>
+                        {mineStat.dangerZoneCount}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Safe Distance</span>
+                      <span className="font-semibold text-foreground">{mineStat.habitationDistance} km</span>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Map */}
         <Card className="p-4 md:p-6 border-2 border-border">
