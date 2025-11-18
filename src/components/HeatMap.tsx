@@ -12,6 +12,7 @@ const HeatMap = ({ data, type }: HeatMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<L.Map | null>(null);
   const heatLayerRef = useRef<any>(null);
+  const markersRef = useRef<L.Marker[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -49,17 +50,28 @@ const HeatMap = ({ data, type }: HeatMapProps) => {
       mapInstance.current.removeLayer(heatLayerRef.current);
     }
 
-    // Add mine location markers
+    // Remove existing markers
+    markersRef.current.forEach(marker => {
+      mapInstance.current?.removeLayer(marker);
+    });
+    markersRef.current = [];
+
+    // Define mine locations with exact coordinates
     const miningLocations = [
-      { name: 'Jadugora Uranium Mines', lat: 22.65, lng: 86.35 },
-      { name: 'Dhanbad Coal Mines', lat: 23.80, lng: 86.43 },
-      { name: 'HCL Mines East Singhbhum', lat: 22.56, lng: 86.18 }
+      { name: 'Jadugora Uranium Mines', lat: 22.65211539356422, lng: 86.34680994085488, types: ['radiation'] },
+      { name: 'Dhanbad Coal Mines', lat: 23.77159142336081, lng: 86.41129267273159, types: ['gas', 'vibration'] },
+      { name: 'HCL Mines East Singhbhum', lat: 22.59500151570727, lng: 86.45168974206193, types: ['gas', 'vibration'] }
     ];
 
-    miningLocations.forEach(mine => {
-      L.marker([mine.lat, mine.lng])
+    // Filter mines based on selected type
+    const relevantMines = miningLocations.filter(mine => mine.types.includes(type));
+
+    // Add markers only for relevant mines
+    relevantMines.forEach(mine => {
+      const marker = L.marker([mine.lat, mine.lng])
         .addTo(mapInstance.current!)
         .bindPopup(`<strong>${mine.name}</strong>`);
+      markersRef.current.push(marker);
     });
 
     // Prepare heat data with intensity
@@ -86,12 +98,16 @@ const HeatMap = ({ data, type }: HeatMapProps) => {
 
     heatLayerRef.current = heatLayer;
 
-    // Fit bounds to show all three mines
-    if (data.length > 0) {
-      const bounds = L.latLngBounds(data.map(d => [d.latitude, d.longitude]));
+    // Fit bounds to show relevant mines and data
+    if (data.length > 0 && relevantMines.length > 0) {
+      const allPoints = [
+        ...data.map(d => [d.latitude, d.longitude] as [number, number]),
+        ...relevantMines.map(m => [m.lat, m.lng] as [number, number])
+      ];
+      const bounds = L.latLngBounds(allPoints);
       mapInstance.current.fitBounds(bounds, { padding: [50, 50] });
     }
-  }, [data]);
+  }, [data, type]);
 
   return (
     <div className="relative w-full h-full">

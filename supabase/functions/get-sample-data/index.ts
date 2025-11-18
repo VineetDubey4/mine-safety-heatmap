@@ -22,9 +22,9 @@ Deno.serve(async (req) => {
     
     // Define actual mining locations in Jharkhand, India
     const miningLocations = [
-      { name: 'Jadugora Uranium Mines', lat: 22.65, lng: 86.35, types: ['radiation', 'gas'] },
-      { name: 'Dhanbad Coal Mines', lat: 23.80, lng: 86.43, types: ['gas', 'vibration'] },
-      { name: 'HCL Mines East Singhbhum', lat: 22.56, lng: 86.18, types: ['vibration', 'radiation'] }
+      { name: 'Jadugora Uranium Mines', lat: 22.65211539356422, lng: 86.34680994085488, types: ['radiation'] },
+      { name: 'Dhanbad Coal Mines', lat: 23.77159142336081, lng: 86.41129267273159, types: ['gas', 'vibration'] },
+      { name: 'HCL Mines East Singhbhum', lat: 22.59500151570727, lng: 86.45168974206193, types: ['gas', 'vibration'] }
     ];
     
     // Generate data points for each mine (15-20 points per mine)
