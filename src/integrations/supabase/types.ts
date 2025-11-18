@@ -20,6 +20,7 @@ export type Database = {
           id: string
           latitude: number
           longitude: number
+          mine_name: string | null
           timestamp: string | null
           type: string
           value: number
@@ -29,6 +30,7 @@ export type Database = {
           id?: string
           latitude: number
           longitude: number
+          mine_name?: string | null
           timestamp?: string | null
           type: string
           value: number
@@ -38,6 +40,7 @@ export type Database = {
           id?: string
           latitude?: number
           longitude?: number
+          mine_name?: string | null
           timestamp?: string | null
           type?: string
           value?: number
